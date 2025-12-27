@@ -1,6 +1,8 @@
 test_src = [
-  '../src/parser.h',
+  '../src/gly.c',
+  '../src/gly.h',
   '../src/parser.c',
+  '../src/parser.h',
   'test.c',
 ]
 

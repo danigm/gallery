@@ -6,12 +6,14 @@ project(
 
 # Sources
 headers = [
+  'src/gly.h',
   'src/parser.h',
 ]
 
 src = [
-  'src/parser.c',
+  'src/gly.c',
   'src/main.c',
+  'src/parser.c',
 ]
 
 # Dependencies

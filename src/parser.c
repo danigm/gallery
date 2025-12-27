@@ -1,10 +1,39 @@
-#include <gio/gio.h>
 #include <stdio.h>
+#include <gio/gio.h>
+#include <libexif/exif-data.h>
 
 #include "parser.h"
 
 /**
+ * gly_parse_image:
+ * @path: the image path
+ * Returns: 0 if all okay, <0 if error
+ *
+ * Get the image metadata
+ *
+ * TODO:
+ * - Handle error status with GError
+ * - Return the ExifData
+ */
+int
+gly_parse_image(Gallery *gly, const char *path)
+{
+    ExifData *data = exif_data_new_from_file (path);
+
+    if (data == NULL) {
+        return -1;
+    }
+
+    printf ("%s\n", path);
+    exif_data_dump (data);
+
+    exif_data_unref (data);
+    return 0;
+}
+
+/**
  * gly_parse_directory:
+ * @gly: The #Gallery struct
  * @dir: a directory path
  * Returns: 0 if all okay, <0 if error
  *
@@ -13,10 +42,9 @@
  *
  * TODO:
  * - use GError to store error information
- * - pass Gallery struct as first argument to store all information
  */
 int
-gly_parse_directory(const char *dir)
+gly_parse_directory(Gallery *gly, const char *dir)
 {
     g_autoptr(GFileEnumerator) files = NULL;
     g_autoptr(GError) error = NULL;
@@ -27,22 +55,23 @@ gly_parse_directory(const char *dir)
 
     files = g_file_enumerate_children (path, "", G_FILE_QUERY_INFO_NONE, NULL, &error);
     while (TRUE) {
+        g_autofree char *file_path = NULL;
         GFileInfo *info = NULL;
         if (!g_file_enumerator_iterate (files, &info, NULL, NULL, &error))
             break;
         if (!info)
             break;
 
+        file_path = g_strdup_printf ("%s/%s", dir, g_file_info_get_name (info));
+
         if (g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY) {
-            g_autofree char *newdir = g_strdup_printf ("%s/%s", dir, g_file_info_get_name (info));
-            gly_parse_directory (newdir);
+            gly_parse_directory (gly, file_path);
             continue;
         }
-
         if (g_file_info_get_file_type (info) != G_FILE_TYPE_REGULAR)
             continue;
 
-        printf ("%s/%s\n", dir, g_file_info_get_name (info));
+        gly_parse_image (gly, file_path);
     }
 
     return 0;

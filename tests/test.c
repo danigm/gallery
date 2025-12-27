@@ -7,8 +7,11 @@
 static void
 gly_parser_test1 ()
 {
-    int ret = gly_parse_directory ("testfiles");
+    Gallery *gly = gly_new ();
+    int ret = gly_parse_directory (gly, "testfiles");
     g_assert (ret == 0);
+
+    gly_free (gly);
 }
 
 
