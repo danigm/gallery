@@ -1,4 +1,6 @@
 test_src = [
+  '../src/img.c',
+  '../src/img.h',
   '../src/gly.c',
   '../src/gly.h',
   '../src/parser.c',

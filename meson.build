@@ -7,11 +7,13 @@ project(
 # Sources
 headers = [
   'src/gly.h',
+  'src/img.h',
   'src/parser.h',
 ]
 
 src = [
   'src/gly.c',
+  'src/img.c',
   'src/main.c',
   'src/parser.c',
 ]

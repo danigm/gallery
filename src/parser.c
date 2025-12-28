@@ -3,6 +3,7 @@
 #include <libexif/exif-data.h>
 
 #include "parser.h"
+#include "img.h"
 
 /**
  * gly_parse_image:
@@ -18,16 +19,17 @@
 int
 gly_parse_image(Gallery *gly, const char *path)
 {
-    ExifData *data = exif_data_new_from_file (path);
-
-    if (data == NULL) {
+    Img *img = gly_img_new (path);
+    if (img->exif == NULL) {
+        gly_img_free (img);
         return -1;
     }
 
-    printf ("%s\n", path);
-    exif_data_dump (data);
+    printf ("%s\n", img->path);
+    printf ("%s\n", gly_img_datetime (img));
+    exif_data_dump (img->exif);
 
-    exif_data_unref (data);
+    gly_img_free (img);
     return 0;
 }
 
