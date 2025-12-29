@@ -1,0 +1,41 @@
+<head>
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="photoswipe/photoswipe.css">
+</head>
+
+<body>
+    <!-- Images will be inserted here -->
+    <div id="gallery">
+        <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg" 
+            data-pswp-width="1669" 
+            data-pswp-height="2500" 
+            target="_blank">
+            <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg" alt="" />
+        </a>
+        <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg" 
+            data-pswp-width="1669" 
+            data-pswp-height="2500" 
+            target="_blank">
+            <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg" alt="" />
+        </a>
+        <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg" 
+            data-pswp-width="1669" 
+            data-pswp-height="2500" 
+            target="_blank">
+            <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg" alt="" />
+        </a>
+    </div>
+
+    <script type="module">
+        import PhotoSwipeLightbox from './photoswipe/photoswipe-lightbox.esm.js';
+        import PhotoSwipe from './photoswipe/photoswipe.esm.js';
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#gallery',
+            children: 'a',
+            imageClickAction: 'next',
+            tapAction: 'next',
+            pswpModule: PhotoSwipe,
+        });
+        lightbox.init();
+    </script>
+</body>
