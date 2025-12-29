@@ -1,9 +1,11 @@
 #pragma once
 
+#include <glib.h>
 #include <libexif/exif-data.h>
 
 typedef struct {
     char *path;
+    GDateTime *date;
     ExifData *exif;
 } Img;
 

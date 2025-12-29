@@ -25,10 +25,6 @@ gly_parse_image(Gallery *gly, const char *path)
         return -1;
     }
 
-    printf ("%s\n", img->path);
-    printf ("%s\n", gly_img_datetime (img));
-    exif_data_dump (img->exif);
-
     gly_img_free (img);
     return 0;
 }
