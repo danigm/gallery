@@ -9,6 +9,7 @@ headers = [
   'src/gly.h',
   'src/img.h',
   'src/parser.h',
+  'src/writer.h',
 ]
 
 src = [
@@ -16,6 +17,7 @@ src = [
   'src/img.c',
   'src/main.c',
   'src/parser.c',
+  'src/writer.c',
 ]
 
 # Dependencies
