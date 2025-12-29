@@ -20,12 +20,21 @@ int
 gly_parse_image(Gallery *gly, const char *path)
 {
     Img *img = gly_img_new (path);
+    GList *imgs = NULL;
+
     if (img->exif == NULL) {
         gly_img_free (img);
         return -1;
     }
 
-    gly_img_free (img);
+    imgs = g_list_first (g_hash_table_lookup (gly->buckets, &img->key));
+    if (!imgs) {
+        imgs = g_list_insert_sorted (NULL, img, (GCompareFunc)gly_img_cmp);
+        g_hash_table_insert (gly->buckets, &img->key, imgs);
+    } else {
+        imgs = g_list_insert_sorted (imgs, img, (GCompareFunc)gly_img_cmp);
+    }
+
     return 0;
 }
 

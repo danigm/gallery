@@ -1,6 +1,9 @@
 #pragma once
 
+#include <glib.h>
+
 typedef struct {
+    GHashTable *buckets; // HashTable(YYYYMM, [Img, Img, ...])
 } Gallery;
 
 
