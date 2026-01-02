@@ -87,3 +87,39 @@ gly_img_cmp (Img *a, Img *b)
 {
     return g_date_time_compare (a->date, b->date);
 }
+
+/**
+ * Returns: The image exif data for EXIF_TAG_IMAGE_WIDTH
+ */
+int
+gly_img_width (Img *img)
+{
+    ExifEntry *entry = NULL;
+
+    if (!img->exif)
+        return 0;
+
+    entry = exif_data_get_entry (img->exif, EXIF_TAG_IMAGE_WIDTH);
+    if (!entry)
+        return 0;
+
+    return *(int*)entry->data;
+}
+
+/**
+ * Returns: The image exif data for EXIF_TAG_IMAGE_LENGTH
+ */
+int
+gly_img_height (Img *img)
+{
+    ExifEntry *entry = NULL;
+
+    if (!img->exif)
+        return 0;
+
+    entry = exif_data_get_entry (img->exif, EXIF_TAG_IMAGE_LENGTH);
+    if (!entry)
+        return 0;
+
+    return *(int*)entry->data;
+}

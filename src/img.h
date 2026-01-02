@@ -15,5 +15,7 @@ void gly_img_free (Img *img);
 
 const char *gly_img_datetime (Img *img);
 int         gly_img_cmp (Img *a, Img *b);
+int         gly_img_width (Img *img);
+int         gly_img_height (Img *img);
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC(Img, gly_img_free)

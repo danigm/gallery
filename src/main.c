@@ -20,7 +20,7 @@ main(int argc, char **argv)
     ret = gly_parse_directory (gly, argv[1]);
 
     // TODO: template folder as argument
-    gly_writer_write (gly, "html", "output");
+    gly_writer_write (gly, argv[1], "html", "output");
 
     return ret;
 }
