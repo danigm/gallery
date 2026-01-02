@@ -8,7 +8,8 @@ int
 main(int argc, char **argv)
 {
     int ret = 0;
-    Gallery *gly = NULL;
+
+    g_autoptr(Gallery) gly = NULL;
 
     if (argc != 2) {
         printf ("Usage: %s path\n", argv[0]);
