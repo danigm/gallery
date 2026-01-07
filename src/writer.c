@@ -150,7 +150,7 @@ gly_writer_write (Gallery *gly, const char *path, const char *tmpl, const char *
     copy_all_files (path, g_file_get_path (images));
 
     // Loading template file
-    template = xmlReadFile (filename, NULL, 0);
+    template = xmlReadFile (filename, NULL, XML_PARSE_COMPACT | XML_PARSE_BIG_LINES | XML_PARSE_NOBLANKS);
 
     // Iterate over all dates and create a different file for each one with all images.
     keys = g_hash_table_get_keys (gly->buckets);
@@ -165,19 +165,16 @@ gly_writer_write (Gallery *gly, const char *path, const char *tmpl, const char *
 
         //  Iterate over all images in this key and add to the block
         imgs = g_hash_table_lookup (gly->buckets, &k);
-        xmlNodeAddContent (block, BAD_CAST "\n");
         while (imgs != NULL) {
             xmlNodePtr img_node = img_build_node (doc, (Img*)imgs->data);
             xmlAddChild (block, img_node);
-            xmlNodeAddContent (block, BAD_CAST "\n");
             imgs = imgs->next;
         }
         // TODO: Add links to prev/next
         // TODO: Add link to index.html
 
         // Write the new doc as key.html
-        xmlSaveCtxt *ctxt = xmlSaveToFilename(uri, "UTF-8", XML_SAVE_FORMAT | XML_SAVE_XHTML | XML_SAVE_INDENT);
-        xmlSaveSetIndentString (ctxt, "\t");
+        xmlSaveCtxt *ctxt = xmlSaveToFilename (uri, "UTF-8", XML_SAVE_FORMAT);
 
         if (xmlSaveDoc (ctxt, doc) < 0) {
             fprintf(stderr, "failed save to %s\n", uri);
